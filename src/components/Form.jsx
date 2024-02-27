@@ -2,6 +2,7 @@ import Autocomplete from "react-google-autocomplete";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../utils/helpers";
+import { useEffect } from "react";
 
 const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
   const {
@@ -9,6 +10,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
     handleSubmit,
     reset,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -53,6 +55,8 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     ...prevUser,
                     name: e.target.value,
                   }));
+                  setValue("name", e.target.value);
+                  clearErrors("name");
                 }}
               />
             </div>
@@ -77,6 +81,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     ...prevUser,
                     surname: e.target.value,
                   }));
+                  clearErrors("surname");
                 }}
               />
             </div>
@@ -101,6 +106,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     ...prevUser,
                     email: e.target.value,
                   }));
+                  clearErrors("email");
                 }}
               />
             </div>
@@ -133,6 +139,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                       country,
                     }));
                     setValue("country", country);
+                    clearErrors("country");
                   }}
                   placeholder="Country"
                   types={["(countries)"]}
@@ -171,6 +178,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                       city,
                     }));
                     setValue("city", city);
+                    clearErrors("city");
                   }}
                   placeholder="City"
                 />
@@ -196,6 +204,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                       ...prevUser,
                       house: e.target.value,
                     }));
+                    clearErrors("house");
                   }}
                 />
               </div>
@@ -220,6 +229,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                       ...prevUser,
                       code: e.target.value,
                     }));
+                    clearErrors("code");
                   }}
                 />
               </div>
