@@ -81,6 +81,7 @@ form {
   margin-bottom: 32px;
   gap: 10px;
 }
+
 .formEdit_wrapper {
   max-width: 400px;
   width: 100%;
@@ -102,6 +103,7 @@ form {
   width: 100px;
   text-align: left;
 }
+
 .address_wrapper {
   display: flex;
   flex-direction: column;
@@ -111,8 +113,6 @@ form {
   display: flex;
   margin-bottom: 10px;
 }
-
-
 
 .inputItem {
   max-width: 250px;
@@ -133,6 +133,12 @@ form {
   cursor: pointer;
   max-width: 150px;
 }
+
+.button:hover {
+  background-color: #7a81cc;
+  transition: all 0.3s ease;
+}
+
 .button_margin {
   margin-bottom: 15px;
 }
