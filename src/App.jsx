@@ -16,23 +16,17 @@ function App() {
   const [userExists, setUserExists] = useState(false);
   const [registeredSuccess, setRegisteredSuccess] = useState(false);
 
-  const handleSubmitManager = (e) => {
-    const existingUser = localStorage.getItem(user.email);
-    if (existingUser) {
-      setUserExists(true);
-    } else {
-      localStorage.setItem(user.email, JSON.stringify(user));
-      setUser({
-        name: "",
-        surname: "",
-        email: "",
-        country: "",
-        city: "",
-        house: "",
-        code: "",
-      });
-      setRegisteredSuccess(true);
-    }
+  const handleSubmitManager = () => {
+    setUser({
+      name: "",
+      surname: "",
+      email: "",
+      country: "",
+      city: "",
+      house: "",
+      code: "",
+    });
+    setRegisteredSuccess(true);
   };
 
   useEffect(() => {
@@ -58,6 +52,8 @@ function App() {
             setUser={setUser}
             user={user}
             handleSubmitManager={handleSubmitManager}
+            setUserExists={setUserExists}
+            setRegisteredSuccess={setRegisteredSuccess}
           />
 
           {userExists && (

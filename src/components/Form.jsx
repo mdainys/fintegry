@@ -3,19 +3,40 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../utils/helpers";
 
-const Form = ({ handleSubmitManager, setUser, user }) => {
+const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  const onSubmit = (data) => {
+    const existingUser = localStorage.getItem(user.email);
+    if (existingUser) {
+      setUserExists(true);
+    } else {
+      localStorage.setItem(user.email, JSON.stringify(data));
+      setUser({
+        name: data.name,
+        surname: data.surname,
+        email: data.email,
+        country: data.country,
+        city: data.city,
+        house: data.house,
+        code: data.code,
+      });
+      handleSubmitManager();
+      reset();
+    }
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit(handleSubmitManager)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form_wrapper">
           <div className="form_list">
             <div className="form_item">
@@ -25,7 +46,7 @@ const Form = ({ handleSubmitManager, setUser, user }) => {
                 type="text"
                 name="name"
                 placeholder="Name"
-                value={user.name}
+                defaultValue={user.name}
                 className="inputItem"
                 onChange={(e) => {
                   setUser((prevUser) => ({
@@ -41,7 +62,7 @@ const Form = ({ handleSubmitManager, setUser, user }) => {
               )}
             </div>
           </div>
-          <div>
+          <div className="form_list">
             <div className="form_item">
               <div className="label">Surname:</div>
               <input
@@ -65,7 +86,7 @@ const Form = ({ handleSubmitManager, setUser, user }) => {
               )}
             </div>
           </div>
-          <div>
+          <div className="form_list">
             <div className="form_item">
               <div className="label">Email:</div>
               <input
@@ -98,16 +119,13 @@ const Form = ({ handleSubmitManager, setUser, user }) => {
                   apiKey={import.meta.env.VITE_APP_GOOGLE_API_KEY}
                   {...register("country", { required: true })}
                   onPlaceSelected={(place) => {
-                    const country = place.address_components[0].long_name;
+                    const country = place.formatted_address;
                     setUser((prevUser) => ({
                       ...prevUser,
-                      country: place.address_components[0].long_name,
+                      country: place.formatted_address,
                     }));
                     setValue("country", country);
                   }}
-                  types={["(countries)"]}
-                  language="en"
-                  className="inputItem"
                   onBlur={(e) => {
                     const country = e.target.value;
                     setUser((prevUser) => ({
@@ -117,6 +135,9 @@ const Form = ({ handleSubmitManager, setUser, user }) => {
                     setValue("country", country);
                   }}
                   placeholder="Country"
+                  types={["(countries)"]}
+                  language="en"
+                  className="inputItem"
                 />
               </div>
               <div>
