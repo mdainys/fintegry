@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
 
 const ListOfUsers = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingValue, setEditingValue] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   const fetchUsers = () => {
     let keys = [];
@@ -39,6 +42,20 @@ const ListOfUsers = ({ user }) => {
     setEditingValue({ ...editingValue, [key]: event.target.value });
   };
 
+  const openModal = (index) => {
+    setUserToDelete(index);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const confirmDelete = () => {
+    handleDelete(userToDelete);
+    setModalIsOpen(false);
+  };
+
   useEffect(() => {
     fetchUsers();
   }, [user]);
@@ -69,31 +86,35 @@ const ListOfUsers = ({ user }) => {
                       </div>
                     ))}
                   </div>
-                  <button onClick={handleSave} className="button button_margin">
-                    Save
-                  </button>
-                  <button onClick={handleCancel} className="button">
-                    Cancel
-                  </button>
+                  <div className="button_list button_margin">
+                    <button onClick={handleSave} className="button">
+                      Save
+                    </button>
+                    <button onClick={handleCancel} className="button ">
+                      Cancel
+                    </button>
+                  </div>
                 </>
               ) : (
                 <div className="usersList">
                   <div>{user}</div>
-                  <div>
-                    <button
-                      onClick={() => handleEdit(index)}
-                      className="button"
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className="button"
-                      onClick={() => handleDelete(index)}
-                    >
-                      Delete
-                    </button>
+                  <div className="button_list">
+                    <div>
+                      <button
+                        onClick={() => handleEdit(index)}
+                        className="button"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        className="button"
+                        onClick={() => openModal(index)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -101,6 +122,40 @@ const ListOfUsers = ({ user }) => {
           );
         })
       )}
+      <Modal
+        appElement={document.getElementById("root")}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Delete User Confirmation"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.25)",
+          },
+          content: {
+            color: "lightsteelblue",
+            width: "300px",
+            height: "170px",
+            margin: "auto",
+            padding: "10px",
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          },
+        }}
+      >
+        <h2>Are you sure you want to delete this user?</h2>
+        <div className="button_list">
+          <button onClick={confirmDelete} className="button">
+            Yes
+          </button>
+          <button onClick={closeModal} className="button">
+            No
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

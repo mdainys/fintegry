@@ -2,7 +2,6 @@ import Autocomplete from "react-google-autocomplete";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../utils/helpers";
-import { useEffect } from "react";
 
 const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
   const {
@@ -167,7 +166,7 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     }));
                     setValue("city", city);
                   }}
-                  types={["(cities)"]}
+                  types={["(regions)"]}
                   language="en"
                   autoComplete="false"
                   className="inputItem"
