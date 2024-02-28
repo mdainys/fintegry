@@ -118,44 +118,45 @@ const ListOfUsers = ({ user }) => {
                   </div>
                 </div>
               )}
+              <Modal
+                appElement={document.getElementById("root")}
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Delete User Confirmation"
+                closeTimeoutMS={300}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.25)",
+                  },
+                  content: {
+                    color: "lightsteelblue",
+                    width: "300px",
+                    height: "170px",
+                    margin: "auto",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  },
+                }}
+              >
+                <h2>Are you sure you want to delete this user?</h2>
+                <div className="button_list">
+                  <button onClick={confirmDelete} className="button">
+                    Yes
+                  </button>
+                  <button onClick={closeModal} className="button">
+                    No
+                  </button>
+                </div>
+              </Modal>
             </div>
           );
         })
       )}
-      <Modal
-        appElement={document.getElementById("root")}
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Delete User Confirmation"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.25)",
-          },
-          content: {
-            color: "lightsteelblue",
-            width: "300px",
-            height: "170px",
-            margin: "auto",
-            padding: "10px",
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-          },
-        }}
-      >
-        <h2>Are you sure you want to delete this user?</h2>
-        <div className="button_list">
-          <button onClick={confirmDelete} className="button">
-            Yes
-          </button>
-          <button onClick={closeModal} className="button">
-            No
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 };
