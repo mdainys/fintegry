@@ -166,10 +166,6 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     }));
                     setValue("city", city);
                   }}
-                  types={["(regions)"]}
-                  language="en"
-                  autoComplete="false"
-                  className="inputItem"
                   onBlur={(e) => {
                     const city = e.target.value;
                     setUser((prevUser) => ({
@@ -180,6 +176,10 @@ const Form = ({ handleSubmitManager, setUser, user, setUserExists }) => {
                     clearErrors("city");
                   }}
                   placeholder="City"
+                  types={["(cities)"]}
+                  language="en"
+                  autoComplete="false"
+                  className="inputItem"
                 />
               </div>
               <div>
