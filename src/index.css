@@ -184,7 +184,14 @@ form {
   opacity: 0;
 }
 
-
+@media screen and (max-width: 600px){
+  .usersList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
 
 @media screen and (max-width: 460px) {
   .form_item {
@@ -201,12 +208,7 @@ form {
     flex-direction: column;
   }
 
-  .usersList {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
+
 }
 
 
